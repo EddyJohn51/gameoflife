@@ -5,7 +5,7 @@ var context = canvas.getContext('2d');
 
 const HEIGHT = canvas.getAttribute('height');
 const WIDTH = canvas.getAttribute('width');
-const TILESIZE = 50;
+const TILESIZE = 9;
 
 const ROWS = HEIGHT / TILESIZE;
 const COLS = WIDTH / TILESIZE;
@@ -23,7 +23,7 @@ const neighborDiffs = [[-1, -1], [0, -1], [1, -1],
 class Cell {
     constructor(x,y)
     {
-        this.alive = Math.random() < 0.5;
+        this.alive = Math.random() < 0.1;
         this.x = x;
         this.y = y;
         this.neighbors = new Array;
@@ -33,16 +33,19 @@ class Cell {
 
 function update_grid(new_grid)
 {
-    grid = []
+    //grid = []
     // function to copy a new grid into global grid variable
+    var i = 0;
     for(var row of new_grid)
     {
-        var new_row = new Array;
+        var j = 0;
+     //   var new_row = new Array;
         for(var cell of row)
         {
-            new_row.push(cell);
+            grid[i][j].alive = cell.alive;
+            ++j;
         }
-        grid.push(new_row);
+        ++i;
     }
 }
 
@@ -97,15 +100,14 @@ function draw() {
             if(c.alive){
                 context.fillStyle = 'green';
                 context.fillRect(c.x * TILESIZE, c.y * TILESIZE, TILESIZE, TILESIZE);
-                context.stroke();
             }else
             {
                 context.fillStyle = 'black';
                 context.fillRect(c.x * TILESIZE, c.y * TILESIZE, TILESIZE, TILESIZE);
-                context.stroke();
             }
         }
     }
+    context.stroke();
 
 }
 
